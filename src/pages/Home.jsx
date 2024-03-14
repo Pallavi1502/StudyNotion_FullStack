@@ -7,12 +7,14 @@ import Banner from "../assets/Images/banner.mp4"
 import CodeBlocks from '../components/core/Homepage/CodeBlocks'
 import TimelineSection from '../components/core/Homepage/TimelineSection'
 import LearningLanguageSection from '../components/core/Homepage/LearningLanguageSection'
+import InstructorSection from '../components/core/Homepage/InstructorSection'
+
 
 const Home = () =>{
     return(
         <div>
             {/*Section1  */}
-            <div className='relative mx-auto flex flex-col w-10/12 max-w-maxContent items-center 
+            <div className='relative mx-auto flex flex-col w-8/12 max-w-maxContent items-center 
                            text-white justify-between'>
                     <Link to={"/signup"}>
                         <div className=' group mt-16 p-1 mx-auto rounded-full bg-richblack-800 
@@ -177,7 +179,18 @@ const Home = () =>{
                  </div>
             </div>   
 
-            {/* section -3 */}         
+            {/* section -3 */}      
+            <div className='w-11/12 mx-auto max-w-maxContent flex-col items-center justify-between 
+                gap-8 first-letter bg-richblack-900 text-white'>
+
+            <InstructorSection />
+
+            <h2 className='text-center text-4xl font-semobold mt-10'>
+                review from Other Learners</h2>
+            {/* Review Slider here */}
+            
+      </div>
+   
 
         </div>
     )
