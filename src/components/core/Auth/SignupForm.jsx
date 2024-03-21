@@ -5,8 +5,8 @@ import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 
 import { sendOtp } from "../../../services/operations/authAPI"
-import { setSignupData } from "../../../slices/authSlice"
-import { ACCOUNT_TYPE } from "../../../utils/constants"
+import { setSignupData } from "../../../Slices/authSlice"
+import  ACCOUNT_TYPE  from "../../../utils/constants"
 import Tab from "../../common/Tab"
 
 function SignupForm() {
@@ -64,7 +64,7 @@ function SignupForm() {
       password: "",
       confirmPassword: "",
     })
-    setAccountType(ACCOUNT_TYPE.STUDENT)
+    setAccountType(accountType)
   }
 
   // data to pass to Tab component
