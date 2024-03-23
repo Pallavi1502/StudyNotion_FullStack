@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom"
 
 import { sendOtp } from "../../../services/operations/authAPI"
 import { setSignupData } from "../../../Slices/authSlice"
-import  ACCOUNT_TYPE  from "../../../utils/constants"
+import  {ACCOUNT_TYPE}  from "../../../utils/constants"
 import Tab from "../../common/Tab"
 
 function SignupForm() {
@@ -64,7 +64,7 @@ function SignupForm() {
       password: "",
       confirmPassword: "",
     })
-    setAccountType(accountType)
+    setAccountType(ACCOUNT_TYPE.STUDENT)
   }
 
   // data to pass to Tab component

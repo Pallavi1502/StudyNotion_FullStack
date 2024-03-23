@@ -34,24 +34,25 @@ exports.sendOTP = async (req,res) => {
         console.log("OTP generated: ", otp);
 
         //check for unique otp
-        let result = await OTP.findOne({otp: otp});
-        while(result){
-            otp = otpGenerator.generate(6,{
-                upperCaseAlphabets:false,
-                lowerCaseAlphabets:false,
-                specialChars:false,
-            });
-            result = await OTP.findOne({otp: otp});
-        }
+        // let result = await OTP.findOne({otp: otp});
+        // while(result){
+        //     otp = otpGenerator.generate(6,{
+        //         upperCaseAlphabets:false,
+        //         lowerCaseAlphabets:false,
+        //         specialChars:false,
+        //     });
+        //     result = await OTP.findOne({otp: otp});
+        // }
 
-        // const resopnse = await OTP.findOne({ otp: otp });
-		// console.log("OTP", otp);
-		// console.log("Result", response);
-		// while (response) {
-		// 	otp = otpGenerator.generate(6, {
-		// 		upperCaseAlphabets: false,
-		// 	});
-		// }
+        const result = await OTP.findOne({ otp: otp });
+		console.log("OTP", otp);
+		console.log("Result", result);
+		while (result) {
+			otp = otpGenerator.generate(6, {
+				upperCaseAlphabets: false,
+			});
+            result = await OTP.findOne({ otp: otp });
+		}
 
 
         const otpPayload = {email, otp};
@@ -60,7 +61,7 @@ exports.sendOTP = async (req,res) => {
         const otpBody = await OTP.create(otpPayload);
         console.log(otpBody);
 
-        res.status(200).json({
+        return res.status(200).json({
             success:true,
             message:'OTP sent successfully',
             otp,
