@@ -82,13 +82,13 @@ exports.signup = async (req,res) =>{
     try{
             //fetch data
         const {
+            accountType,
             firstName,
             lastName,
             email,
             password,
             confirmPassword,
-            accountType,
-            contactNumber,
+            // contactNumber,
             otp,
         } = req.body;
         //validation
