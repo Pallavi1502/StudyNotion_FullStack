@@ -153,7 +153,7 @@ exports.signup = async (req,res) =>{
             email,
             password:hashedPassword,
             accountType,
-            contactNumber,
+            //contactNumber,
             additionalDetails:profileDetails._id,
             image:`https://api.dicebear.com/5.x/initials/svg?seed=${firstName} ${lastName}`,
         })
@@ -202,7 +202,7 @@ exports.login = async (req,res) => {
                 accountType: user.accountType,
             }
             const token = jwt.sign(payload, process.env.JWT_SECRET, {
-                expiresIn: "24h",
+                expiresIn: '24h',
             });
             user.token = token;
             user.password=undefined;

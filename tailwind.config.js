@@ -131,5 +131,19 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    function({addUtilities}){
+      const newUtilities = {
+        ".no-scrollbar::-webkit-scrollbar": {
+          display:"none",
+        },
+        ".no-scrollbar": {
+          "-ms-overflow-stlye":"none",
+          "scrollbar-width": "none",
+        },
+      };
+
+      addUtilities(newUtilities);
+    }
+  ],
 };

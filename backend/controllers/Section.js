@@ -1,5 +1,7 @@
 const Section = require("../models/Section");
 const Course = require("../models/Course");
+const SubSection = require("../models/Subsection")
+
 
 // creating a new section for course
 exports.createSection = async (req, res) => {
@@ -50,16 +52,27 @@ exports.createSection = async (req, res) => {
 // UPDATE a section
 exports.updateSection = async (req, res) => {
 	try {
-		const { sectionName, sectionId } = req.body;
+		const { sectionName, sectionId,courseId } = req.body;
 		const section = await Section.findByIdAndUpdate(
 			sectionId,
 			{ sectionName },
 			{ new: true }
 		);
+		const course = await Course.findById(courseId)
+            .populate({
+        		path: "courseContent",
+        		populate: {
+          		path: "subSection",
+       		 },
+      	})
+      .exec()
+    	console.log(course)
+
 		res.status(200).json({
 			success: true,
 			message: section,
-		});
+			data:course,
+		})
 	} catch (error) {
 		console.error("Error updating section:", error);
 		res.status(500).json({
@@ -73,12 +86,41 @@ exports.updateSection = async (req, res) => {
 // DELETE a section
 exports.deleteSection = async (req, res) => {
 	try {
-		const { sectionId } = req.params;
-		await Section.findByIdAndDelete(sectionId);
+		const { sectionId , courseId} = req.body;
+
+		await Course.findByIdAndUpdate(courseId, {
+			$pull: {
+			  courseContent: sectionId,
+			},
+		  })	  
+		const section = await Section.findByIdAndDelete(sectionId);
+	    console.log(sectionId, courseId)
+			if (!section) {
+			return res.status(404).json({
+				success: false,
+				message: "Section not found",
+			})
+			}
+
+		// Delete the associated subsections
+		await SubSection.deleteMany({ _id: { $in: section.subSection } })
+
+		await Section.findByIdAndDelete(sectionId)
+	
+		// find the updated course and return it
+		const course = await Course.findById(courseId)
+		  .populate({
+			path: "courseContent",
+			populate: {
+			  path: "subSection",
+			},
+		  })
+		  .exec()
 	
 		res.status(200).json({
 			success: true,
 			message: "Section deleted",
+			data:course,
 		});
 	} catch (error) {
 		console.error("Error deleting section:", error);
