@@ -286,7 +286,7 @@ exports.getCourseDetails = async (req, res) => {
       _id: courseId,
     })
       .populate({
-        path: "instructor",
+        path: "instructor", 
         populate: {
           path: "additionalDetails",
         },
